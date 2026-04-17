@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -10,9 +11,11 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Goal Tracker API")
 
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:4200").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
