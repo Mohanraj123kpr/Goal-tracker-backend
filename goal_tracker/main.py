@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 from database import engine, get_db, Base
@@ -7,6 +8,13 @@ import models, crud
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Goal Tracker API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/goals", response_model=List[models.GoalResponse])
