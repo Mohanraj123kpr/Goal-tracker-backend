@@ -80,3 +80,8 @@ def delete_goal(goal_id: int, db: Session = Depends(get_db), current_user: model
     if not deleted:
         raise HTTPException(status_code=404, detail="Goal not found")
     return deleted
+
+# This is important for Vercel
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
