@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "goal_tracker/main.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "goal_tracker/main.py"
+      "dest": "api/index.py"
     }
   ]
 }
