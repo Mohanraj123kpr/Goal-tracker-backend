@@ -1,4 +1,6 @@
 import os
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -11,14 +13,14 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Goal Tracker API")
 
-origins = os.getenv("ALLOWED_ORIGINS", "https://goal-tracker-frontend-cyan.vercel.app").split(",")
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:4200").split(",")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
