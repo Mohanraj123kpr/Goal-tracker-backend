@@ -31,6 +31,8 @@ class GoalDB(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     due_date = Column(Date, nullable=True)
     plan = Column(Text, nullable=True)
+    recurrence = Column(String, default="none", nullable=False)
+    last_reset = Column(Date, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     owner = relationship("UserDB", back_populates="goals")
@@ -69,6 +71,7 @@ class GoalCreate(BaseModel):
     description: Optional[str] = None
     due_date: Optional[date] = None
     plan: Optional[str] = None
+    recurrence: Optional[str] = "none"  # none | daily | weekly | monthly
 
 class GoalUpdate(BaseModel):
     title: Optional[str] = None
@@ -76,6 +79,7 @@ class GoalUpdate(BaseModel):
     completed: Optional[bool] = None
     due_date: Optional[date] = None
     plan: Optional[str] = None
+    recurrence: Optional[str] = None
 
 class GoalResponse(BaseModel):
     id: int
@@ -85,6 +89,8 @@ class GoalResponse(BaseModel):
     created_at: datetime
     due_date: Optional[date]
     plan: Optional[str]
+    recurrence: str
+    last_reset: Optional[date]
     user_id: int
 
     class Config:
