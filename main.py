@@ -19,7 +19,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -69,7 +69,7 @@ def create_goal(goal: models.GoalCreate, db: Session = Depends(get_db), current_
     return crud.create_goal(db, goal, user_id=current_user.id)
 
 
-@app.patch("/goals/{goal_id}", response_model=models.GoalResponse)
+@app.put("/goals/{goal_id}", response_model=models.GoalResponse)
 def update_goal(goal_id: int, goal: models.GoalUpdate, db: Session = Depends(get_db), current_user: models.UserDB = Depends(get_current_user)):
     updated = crud.update_goal(db, goal_id, goal, user_id=current_user.id)
     if not updated:
